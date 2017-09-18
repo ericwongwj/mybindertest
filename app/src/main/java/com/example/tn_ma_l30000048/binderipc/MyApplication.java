@@ -18,10 +18,14 @@ public class MyApplication extends Application {
         super.onCreate();
         log("onCreate");
 
+        //这玩意catch之后不处理就会卡在这
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
                 e.printStackTrace();
+                log("Exception caught in handler:"+e.getMessage());
+                System.exit(0);
+//                startActivity(new In);
             }
         });
     }

@@ -3,6 +3,7 @@ package com.example.tn_ma_l30000048.binderipc;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Parcel;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String s="09-18 09:28:10.516 2547-2570/com.example.tn_ma_l30000048.binderipc D/OpenGLRenderer: endAllActiveAnimators on 0xaa729380 (RippleDrawable) with handle 0xb55342a0\n";
 
     {
-        System.out.println(s);
+        System.out.println("MainActivity init");
     }
     @Override
     public void onClick(View v) {
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 unbindService(bindConnection);
                 break;
             case R.id.btn_aidl_bind:
-
-                break;
+                throw new RuntimeException("hahaha");
+                //break;
             case R.id.btn_aidl_transact:
 
                 break;
@@ -81,6 +82,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_aidl_bind).setOnClickListener(this);
         findViewById(R.id.btn_aidl_transact).setOnClickListener(this);
         findViewById(R.id.btn_aidl_unbind).setOnClickListener(this);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                try{
+                    int a=10/0;
+//                }
+//                catch (ArithmeticException e){//runtime exception 还是能被抓住的
+//                    e.printStackTrace();
+//                }
+//                int []a={1,2,3,4,5};
+//                int b=a[5];
+
+                //throw new RuntimeException("my intent");//android logcat中的进程死了 但是ps 显示进程在futex wait状态 界面也显示 然后会anr
+            }
+        },3000);
     }
 
     void doTransact(){
